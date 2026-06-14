@@ -1,6 +1,6 @@
 [package]
 name = "vban_emitter"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 
 [[bin]]
@@ -18,7 +18,11 @@ path = "src/debug_audio.rs"
 [dependencies]
 wasapi = "0.16"
 clap = { version = "4", features = ["derive"] }
-windows = { version = "0.59", features = ["Win32_System_Threading"] }
+windows = { version = "0.59", features = ["Win32_System_Threading", "Win32_UI_WindowsAndMessaging", "Win32_Foundation", "Win32_System_Console", "Win32_System_DataExchange", "Win32_System_Memory"] }
+tray-icon = "0.19"
+muda = "0.15"
+winit = "0.30"
+ctrlc = "3"
 
 [profile.release]
 opt-level = "z"
