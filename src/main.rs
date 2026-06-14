@@ -209,7 +209,7 @@ struct StatusInfo {
 impl StatusInfo {
     fn to_menu_text(&self) -> String {
         if self.paused {
-            "⏸ Paused".to_string()
+            "⏸ 已暂停".to_string()
         } else {
             format!(
                 "#{:.0}  {:.0}pkt/s  {:.0}KB/s  ring:{}  drop:{}",
@@ -459,11 +459,11 @@ fn main() {
 
     // Menu
     let menu = Menu::new();
-    let status_item = MenuItem::new("Starting...", false, None);
-    let pause_item = MenuItem::new("Pause", true, None);
-    let copy_item = MenuItem::new("Copy Info", true, None);
+    let status_item = MenuItem::new("启动中...", false, None);
+    let pause_item = MenuItem::new("暂停", true, None);
+    let copy_item = MenuItem::new("复制信息", true, None);
     let startup_item = MenuItem::new("Start with Windows", true, None);
-    let quit_item = MenuItem::new("Quit", true, None);
+    let quit_item = MenuItem::new("退出", true, None);
 
     menu.append(&status_item).unwrap();
     menu.append(&PredefinedMenuItem::separator()).unwrap();
@@ -477,7 +477,7 @@ fn main() {
     let _tray_icon = TrayIconBuilder::new()
         .with_menu(Box::new(menu.clone()))
         .with_menu_on_left_click(false)
-        .with_tooltip("VBAN Emitter")
+        .with_tooltip("VBAN 音频流")
         .with_icon(create_icon())
         .build()
         .unwrap();
@@ -485,9 +485,9 @@ fn main() {
     // Update startup menu text
     let update_startup_text = |item: &MenuItem| {
         if is_autostart_enabled() {
-            let _ = item.set_text("☑ Start with Windows");
+            let _ = item.set_text("☑ 开机自启");
         } else {
-            let _ = item.set_text("☐ Start with Windows");
+            let _ = item.set_text("☐ 开机自启");
         }
     };
     update_startup_text(&startup_item);
@@ -510,9 +510,9 @@ fn main() {
                     let is_paused = paused.load(Ordering::Relaxed);
                     paused.store(!is_paused, Ordering::Relaxed);
                     if is_paused {
-                        let _ = pause_item.set_text("Pause");
+                        let _ = pause_item.set_text("暂停");
                     } else {
-                        let _ = pause_item.set_text("▶ Resume");
+                        let _ = pause_item.set_text("▶ 恢复");
                     }
                 } else if event.id == copy_item.id() {
                     if let Ok(s) = latest_for_clip.lock() {
