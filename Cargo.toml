@@ -1,0 +1,26 @@
+[package]
+name = "vban_emitter"
+version = "0.2.0"
+edition = "2021"
+
+[[bin]]
+name = "vban_emitter"
+path = "src/main.rs"
+
+[[bin]]
+name = "vban_sine"
+path = "src/sine_test.rs"
+
+[[bin]]
+name = "debug_audio"
+path = "src/debug_audio.rs"
+
+[dependencies]
+wasapi = "0.16"
+clap = { version = "4", features = ["derive"] }
+windows = { version = "0.59", features = ["Win32_System_Threading"] }
+
+[profile.release]
+opt-level = "z"
+lto = true
+strip = true
